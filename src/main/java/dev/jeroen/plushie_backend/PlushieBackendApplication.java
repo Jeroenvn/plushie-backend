@@ -9,5 +9,4 @@ public class PlushieBackendApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(PlushieBackendApplication.class, args);
 	}
-
 }
