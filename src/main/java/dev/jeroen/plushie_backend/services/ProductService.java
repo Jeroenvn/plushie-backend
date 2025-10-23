@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import dev.jeroen.plushie_backend.dtos.ProductCreateDTO;
 import dev.jeroen.plushie_backend.entities.Product;
 import dev.jeroen.plushie_backend.exceptions.NotFoundException;
+import dev.jeroen.plushie_backend.exceptions.NotUniqueException;
 import dev.jeroen.plushie_backend.repositories.ProductRepository;
 
 @Service
@@ -24,7 +25,7 @@ public class ProductService {
 
         String productName = productCreateDTO.getName();
         if (repository.existsByName(productName)) {
-            throw new RuntimeException(String.format("Name '%s' is not unique", productName));
+            throw new NotUniqueException(String.format("Name '%s' is not unique", productName));
         }
 
         Product product = new Product();
