@@ -1,5 +1,6 @@
 package dev.jeroen.plushie_backend.controllers;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,6 +31,11 @@ public class ProductController {
     @GetMapping("/{id}")
     public Product getById(@PathVariable("id") Long id){
         return service.getProductById(id);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteById(@PathVariable("id") Long id){
+        service.deleteById(id);
     }
 
     @GetMapping("/first")

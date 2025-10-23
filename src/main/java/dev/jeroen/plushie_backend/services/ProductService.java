@@ -38,4 +38,8 @@ public class ProductService {
     public Product getFirst(){
         return getProductById(1L);
     }
+
+    public void deleteById(Long id){
+        repository.deleteById(id);
+    }
 }
