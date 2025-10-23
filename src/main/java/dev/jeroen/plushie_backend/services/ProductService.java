@@ -1,5 +1,6 @@
 package dev.jeroen.plushie_backend.services;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
@@ -25,6 +26,10 @@ public class ProductService {
         product.setDescription(productCreateDTO.getDescription());
 
         repository.save(product);
+    }
+
+    public ArrayList<Product> getAll() {
+        return repository.findAll();
     }
 
     public Product getProductById(Long id) {

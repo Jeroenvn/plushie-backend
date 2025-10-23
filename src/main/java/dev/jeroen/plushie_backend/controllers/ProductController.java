@@ -1,5 +1,7 @@
 package dev.jeroen.plushie_backend.controllers;
 
+import java.util.ArrayList;
+
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,6 +29,11 @@ public class ProductController {
         service.createProduct(product);
     }
 
+    @GetMapping("")
+    public ArrayList<Product> getAll() {
+        return service.getAll();
+    }
+    
     @GetMapping("/{id}")
     public Product getById(@PathVariable("id") Long id) {
         return service.getProductById(id);
