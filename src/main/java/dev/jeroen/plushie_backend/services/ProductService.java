@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import dev.jeroen.plushie_backend.dtos.ProductCreateDTO;
 import dev.jeroen.plushie_backend.entities.Product;
+import dev.jeroen.plushie_backend.exceptions.NotFoundException;
 import dev.jeroen.plushie_backend.repositories.ProductRepository;
 
 @Service
@@ -22,7 +23,7 @@ public class ProductService {
         productCreateDTO.Validate();
 
         String productName = productCreateDTO.getName();
-        if (repository.existsByName(productName)){
+        if (repository.existsByName(productName)) {
             throw new RuntimeException(String.format("Name '%s' is not unique", productName));
         }
 
@@ -39,13 +40,19 @@ public class ProductService {
 
     public Product getProductById(Long id) {
         Optional<Product> product = repository.findById(id);
-        if (product.isPresent()) {
-            return product.get();
+
+        if (!product.isPresent()) {
+            throw new NotFoundException(String.format("Product with id %d not found", id));
         }
-        throw new RuntimeException(String.format("Product with id %d not found", id));
+
+        return product.get();
     }
 
     public void deleteById(Long id) {
+        if (!repository.existsById(id)) {
+            throw new NotFoundException(String.format("Product with id %d not found", id));
+        }
+
         repository.deleteById(id);
     }
 }
