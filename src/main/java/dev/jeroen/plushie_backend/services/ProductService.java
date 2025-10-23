@@ -21,6 +21,11 @@ public class ProductService {
     public void createProduct(ProductCreateDTO productCreateDTO) {
         productCreateDTO.Validate();
 
+        String productName = productCreateDTO.getName();
+        if (repository.existsByName(productName)){
+            throw new RuntimeException(String.format("Name '%s' is not unique", productName));
+        }
+
         Product product = new Product();
         product.setName(productCreateDTO.getName());
         product.setDescription(productCreateDTO.getDescription());

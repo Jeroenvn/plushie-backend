@@ -16,4 +16,6 @@ public interface ProductRepository extends Repository<Product, Long> {
     ArrayList<Product> findAll();
 
     void deleteById(Long id);
+
+    boolean existsByName(String name);
 }
