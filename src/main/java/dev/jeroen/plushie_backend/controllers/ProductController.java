@@ -1,6 +1,7 @@
 package dev.jeroen.plushie_backend.controllers;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,6 +25,11 @@ public class ProductController {
     @PostMapping()
     public void postProduct(@RequestBody ProductCreateDTO product) {
         service.createProduct(product);
+    }
+
+    @GetMapping("/{id}")
+    public Product getById(@PathVariable("id") Long id){
+        return service.getProductById(id);
     }
 
     @GetMapping("/first")
