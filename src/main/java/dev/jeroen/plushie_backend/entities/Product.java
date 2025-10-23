@@ -14,7 +14,7 @@ public class Product {
     private String name;
     private String description;
 
-    public long getId(){
+    public long getId() {
         return id;
     }
 
@@ -29,17 +29,16 @@ public class Product {
     public String getDescription() {
         return description;
     }
-    
+
     public void setDescription(String description) {
         this.description = description;
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return String.format(
-            "Product[id=%d, name='%s', description='%s']",
-            id, name, description
-        );
+                "Product[id=%d, name='%s', description='%s']",
+                id, name, description);
     }
 
 }

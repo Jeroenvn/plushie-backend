@@ -18,9 +18,8 @@ public class PlushieBackendApplication {
 	}
 
 	@Bean
-  	CommandLineRunner runner(ProductRepository repository) {
-    	return args -> {
-
+	CommandLineRunner runner(ProductRepository repository) {
+		return args -> {
 			Product product = new Product();
 			product.setName("Red Shrimp Large");
 			product.setDescription("Large plushie of a red shrimp.");
@@ -29,7 +28,6 @@ public class PlushieBackendApplication {
 			Product saved = repository.findById(product.getId()).orElseThrow(NoSuchElementException::new);
 			System.out.println(saved.toString());
 
-    	};
-  	}
-
+		};
+	}
 }

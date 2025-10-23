@@ -13,29 +13,29 @@ public class ProductService {
 
     ProductRepository repository;
 
-    public ProductService(ProductRepository repository){
+    public ProductService(ProductRepository repository) {
         this.repository = repository;
     }
 
-    public void createProduct(ProductCreateDTO productCreateDTO){
+    public void createProduct(ProductCreateDTO productCreateDTO) {
         productCreateDTO.Validate();
 
         Product product = new Product();
         product.setName(productCreateDTO.getName());
         product.setDescription(productCreateDTO.getDescription());
-        
+
         repository.save(product);
     }
 
-    public Product getProductById(Long id){
+    public Product getProductById(Long id) {
         Optional<Product> product = repository.findById(id);
-        if (product.isPresent()){
+        if (product.isPresent()) {
             return product.get();
         }
         throw new RuntimeException(String.format("Product with id %d not found", id));
     }
 
-    public void deleteById(Long id){
+    public void deleteById(Long id) {
         repository.deleteById(id);
     }
 }

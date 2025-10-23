@@ -12,14 +12,13 @@ import dev.jeroen.plushie_backend.services.ProductService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-
-
 @RestController
 @RequestMapping("/products")
 public class ProductController {
 
     private ProductService service;
-    public ProductController(ProductService service){
+
+    public ProductController(ProductService service) {
         this.service = service;
     }
 
@@ -29,12 +28,12 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public Product getById(@PathVariable("id") Long id){
+    public Product getById(@PathVariable("id") Long id) {
         return service.getProductById(id);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteById(@PathVariable("id") Long id){
+    public void deleteById(@PathVariable("id") Long id) {
         service.deleteById(id);
     }
 }

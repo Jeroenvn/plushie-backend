@@ -20,17 +20,17 @@ public class ProductCreateDTO {
         this.description = description;
     }
 
-    public void Validate(){
-        if (name.isEmpty()){
+    public void Validate() {
+        if (name.isEmpty()) {
             throw new RuntimeException("Name is required");
         }
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return String.format(
-            "ProductCreateDTO[name:'%s', description:'%s']",
-            name, description);
+                "ProductCreateDTO[name:'%s', description:'%s']",
+                name, description);
     }
-    
+
 }
