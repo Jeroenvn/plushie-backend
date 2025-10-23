@@ -33,7 +33,7 @@ public class ProductController {
     public ArrayList<Product> getAll() {
         return service.getAll();
     }
-    
+
     @GetMapping("/{id}")
     public Product getById(@PathVariable("id") Long id) {
         return service.getProductById(id);
@@ -43,4 +43,5 @@ public class ProductController {
     public void deleteById(@PathVariable("id") Long id) {
         service.deleteById(id);
     }
+
 }

@@ -1,6 +1,7 @@
 package dev.jeroen.plushie_backend.dtos;
 
 public class ProductCreateDTO {
+
     private String name;
     private String description;
 

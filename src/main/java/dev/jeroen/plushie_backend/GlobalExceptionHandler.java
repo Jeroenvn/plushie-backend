@@ -29,4 +29,5 @@ public class GlobalExceptionHandler {
         body.put("message", exception.getMessage());
         return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
     }
+
 }

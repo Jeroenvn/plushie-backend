@@ -20,4 +20,5 @@ public interface ProductRepository extends Repository<Product, Long> {
     boolean existsById(long id);
 
     boolean existsByName(String name);
+
 }
