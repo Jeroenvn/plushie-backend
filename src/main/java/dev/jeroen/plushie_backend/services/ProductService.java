@@ -35,10 +35,6 @@ public class ProductService {
         throw new RuntimeException(String.format("Product with id %d not found", id));
     }
 
-    public Product getFirst(){
-        return getProductById(1L);
-    }
-
     public void deleteById(Long id){
         repository.deleteById(id);
     }

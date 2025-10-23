@@ -37,9 +37,4 @@ public class ProductController {
     public void deleteById(@PathVariable("id") Long id){
         service.deleteById(id);
     }
-
-    @GetMapping("/first")
-    public Product getFirst(){
-        return service.getFirst();
-    }
 }
