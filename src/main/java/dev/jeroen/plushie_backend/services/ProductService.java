@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import dev.jeroen.plushie_backend.dtos.ProductCreateDTO;
+import dev.jeroen.plushie_backend.entities.Category;
 import dev.jeroen.plushie_backend.entities.Product;
 import dev.jeroen.plushie_backend.exceptions.NotFoundException;
 import dev.jeroen.plushie_backend.exceptions.NotUniqueException;
@@ -15,9 +16,11 @@ import dev.jeroen.plushie_backend.repositories.ProductRepository;
 public class ProductService {
 
     ProductRepository repository;
+    CategoryService categoryService;
 
-    public ProductService(ProductRepository repository) {
+    public ProductService(ProductRepository repository, CategoryService categoryService) {
         this.repository = repository;
+        this.categoryService = categoryService;
     }
 
     public void createProduct(ProductCreateDTO productCreateDTO) {
@@ -31,6 +34,9 @@ public class ProductService {
         Product product = new Product();
         product.setName(productCreateDTO.getName());
         product.setDescription(productCreateDTO.getDescription());
+
+        Category category = categoryService.getCategoryById(productCreateDTO.getCategory_id());
+        product.setCategory(category);
 
         repository.save(product);
     }
