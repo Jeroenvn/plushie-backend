@@ -12,4 +12,6 @@ public interface UserRepository extends Repository<CustomUser, Long> {
 
     Optional<CustomUser> findByUsername(String username);
 
+    boolean existsByUsername(String username);
+
 }

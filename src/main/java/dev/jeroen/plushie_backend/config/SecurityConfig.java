@@ -1,7 +1,7 @@
 package dev.jeroen.plushie_backend.config;
 
 import dev.jeroen.plushie_backend.filters.JwtAuthFilter;
-import dev.jeroen.plushie_backend.services.CustomUserDetailsService;
+import dev.jeroen.plushie_backend.services.CustomUserService;
 
 import java.util.Arrays;
 
@@ -27,11 +27,11 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 public class SecurityConfig {
 
     private final JwtAuthFilter jwtAuthFilter;
-    private final CustomUserDetailsService userDetailsService;
+    private final CustomUserService userService;
 
-    public SecurityConfig(JwtAuthFilter jwtAuthFilter, CustomUserDetailsService userDetailsService) {
+    public SecurityConfig(JwtAuthFilter jwtAuthFilter, CustomUserService userService) {
         this.jwtAuthFilter = jwtAuthFilter;
-        this.userDetailsService = userDetailsService;
+        this.userService = userService;
     }
 
     @Bean
@@ -53,7 +53,7 @@ public class SecurityConfig {
     @Bean
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-        provider.setUserDetailsService(userDetailsService);
+        provider.setUserDetailsService(userService);
         provider.setPasswordEncoder(passwordEncoder());
         return provider;
     }
