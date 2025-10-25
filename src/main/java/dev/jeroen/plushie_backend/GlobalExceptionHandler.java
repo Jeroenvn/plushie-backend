@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import dev.jeroen.plushie_backend.exceptions.IncorrectUsernamePasswordCombinationException;
 import dev.jeroen.plushie_backend.exceptions.MissingRequiredVariableException;
 import dev.jeroen.plushie_backend.exceptions.NotFoundException;
 import dev.jeroen.plushie_backend.exceptions.NotUniqueException;
@@ -33,7 +34,8 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(MissingRequiredVariableException.class)
-    public ResponseEntity<Map<String, String>> handleMissingRequiredVariableException(MissingRequiredVariableException exception) {
+    public ResponseEntity<Map<String, String>> handleMissingRequiredVariableException(
+            MissingRequiredVariableException exception) {
         Map<String, String> body = new HashMap<>();
         body.put("error", "Missing Required Variable");
         body.put("message", exception.getMessage());
@@ -41,11 +43,21 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(ViolatingContstrainsException.class)
-    public ResponseEntity<Map<String, String>> handleViolatingContstrainsException(ViolatingContstrainsException exception) {
+    public ResponseEntity<Map<String, String>> handleViolatingContstrainsException(
+            ViolatingContstrainsException exception) {
         Map<String, String> body = new HashMap<>();
         body.put("error", "Violating Constrains");
         body.put("message", exception.getMessage());
         return new ResponseEntity<>(body, HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(IncorrectUsernamePasswordCombinationException.class)
+    public ResponseEntity<Map<String, String>> handleIncorrectUsernamePasswordCombinationException(
+            IncorrectUsernamePasswordCombinationException exception) {
+        Map<String, String> body = new HashMap<>();
+        body.put("error", "Incorrect Username Password Combination");
+        body.put("message", exception.getMessage());
+        return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
     }
 
 }

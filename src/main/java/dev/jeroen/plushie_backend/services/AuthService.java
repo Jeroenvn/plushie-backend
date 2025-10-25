@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import dev.jeroen.plushie_backend.dtos.AuthRequestDTO;
 import dev.jeroen.plushie_backend.dtos.UserRegisterDTO;
 import dev.jeroen.plushie_backend.entities.CustomUser;
+import dev.jeroen.plushie_backend.exceptions.IncorrectUsernamePasswordCombinationException;
 import dev.jeroen.plushie_backend.exceptions.NotFoundException;
 import dev.jeroen.plushie_backend.mappers.UserMapper;
 import dev.jeroen.plushie_backend.utilities.JwtUtil;
@@ -55,7 +56,7 @@ public class AuthService {
         try {
             authentication = authenticationManager.authenticate(usernamePasswordAuthenticationToken);
         } catch (AuthenticationException e) {
-            throw new RuntimeException("Username and password combination is incorrect");
+            throw new IncorrectUsernamePasswordCombinationException("Username and password combination is incorrect");
         }
 
         return jwtUtil.generateToken((UserDetails) authentication.getPrincipal());
