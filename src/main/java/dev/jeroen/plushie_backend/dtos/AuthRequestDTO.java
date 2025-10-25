@@ -1,5 +1,7 @@
 package dev.jeroen.plushie_backend.dtos;
 
+import dev.jeroen.plushie_backend.exceptions.MissingRequiredVariableException;
+
 public class AuthRequestDTO {
 
     private String username;
@@ -19,6 +21,15 @@ public class AuthRequestDTO {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public void validate() {
+        if (username.isEmpty()) {
+            throw new MissingRequiredVariableException("Name is required");
+        }
+        if (password.isEmpty()) {
+            throw new MissingRequiredVariableException("Password is required");
+        }
     }
 
 }

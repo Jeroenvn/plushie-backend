@@ -3,6 +3,7 @@ package dev.jeroen.plushie_backend.services;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import dev.jeroen.plushie_backend.dtos.AuthRequestDTO;
 import dev.jeroen.plushie_backend.dtos.UserRegisterDTO;
 import dev.jeroen.plushie_backend.entities.CustomUser;
+import dev.jeroen.plushie_backend.exceptions.NotFoundException;
 import dev.jeroen.plushie_backend.mappers.UserMapper;
 import dev.jeroen.plushie_backend.utilities.JwtUtil;
 
@@ -39,10 +41,23 @@ public class AuthService {
     }
 
     public String generateToken(AuthRequestDTO authRequest) {
+        authRequest.validate();
+
+        if (!userService.existsByUsername(authRequest.getUsername())) {
+            throw new NotFoundException("User not found");
+        }
+
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
                 authRequest.getUsername(),
                 authRequest.getPassword());
-        Authentication authentication = authenticationManager.authenticate(usernamePasswordAuthenticationToken);
+
+        Authentication authentication;
+        try {
+            authentication = authenticationManager.authenticate(usernamePasswordAuthenticationToken);
+        } catch (AuthenticationException e) {
+            throw new RuntimeException("Username and password combination is incorrect");
+        }
+
         return jwtUtil.generateToken((UserDetails) authentication.getPrincipal());
     }
 
