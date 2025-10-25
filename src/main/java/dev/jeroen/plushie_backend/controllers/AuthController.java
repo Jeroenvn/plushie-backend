@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import dev.jeroen.plushie_backend.dtos.AuthDTO;
 import dev.jeroen.plushie_backend.dtos.AuthRequestDTO;
 import dev.jeroen.plushie_backend.dtos.UserRegisterDTO;
 import dev.jeroen.plushie_backend.services.AuthService;
@@ -23,15 +24,15 @@ public class AuthController {
     }
 
     @PostMapping("/newUser")
-    public ResponseEntity<String> registerUser(@RequestBody UserRegisterDTO userRegister) {
-        authService.registerUser(userRegister);
-        return ResponseEntity.ok("User registered successfully");
+    public ResponseEntity<AuthDTO> registerUser(@RequestBody UserRegisterDTO userRegister) {
+        AuthDTO authDTO = authService.registerUser(userRegister);
+        return ResponseEntity.ok(authDTO);
     }
 
     @PostMapping("/generateToken")
-    public ResponseEntity<Map<String, String>> generateToken(@RequestBody AuthRequestDTO authRequest) {
-        String token = authService.generateToken(authRequest);
-        return ResponseEntity.ok(Map.of("token", token));
+    public ResponseEntity<AuthDTO> generateToken(@RequestBody AuthRequestDTO authRequest) {
+        AuthDTO authDTO = authService.generateToken(authRequest);
+        return ResponseEntity.ok(authDTO);
     }
 
 }

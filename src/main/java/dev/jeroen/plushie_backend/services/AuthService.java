@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import dev.jeroen.plushie_backend.dtos.AuthDTO;
 import dev.jeroen.plushie_backend.dtos.AuthRequestDTO;
 import dev.jeroen.plushie_backend.dtos.UserRegisterDTO;
 import dev.jeroen.plushie_backend.entities.CustomUser;
@@ -34,14 +35,17 @@ public class AuthService {
         this.jwtUtil = jwtUtil;
     }
 
-    public void registerUser(UserRegisterDTO userRegister) {
+    public AuthDTO registerUser(UserRegisterDTO userRegister) {
+        String rawPassword = userRegister.getPassword();
         String encodedPassword = passwordEncoder.encode(userRegister.getPassword());
         userRegister.setPassword(encodedPassword);
         CustomUser user = UserMapper.INSTANCE.userRegisterDTOToCustomUser(userRegister);
         userService.saveUser(user);
+        AuthRequestDTO authRequestDTO = new AuthRequestDTO(userRegister.getUsername(), rawPassword);
+        return generateToken(authRequestDTO);
     }
 
-    public String generateToken(AuthRequestDTO authRequest) {
+    public AuthDTO generateToken(AuthRequestDTO authRequest) {
         authRequest.validate();
 
         if (!userService.existsByUsername(authRequest.getUsername())) {
@@ -59,7 +63,12 @@ public class AuthService {
             throw new IncorrectUsernamePasswordCombinationException("Username and password combination is incorrect");
         }
 
-        return jwtUtil.generateToken((UserDetails) authentication.getPrincipal());
+        String token = jwtUtil.generateToken((UserDetails) authentication.getPrincipal());
+        String tenHours = "36000";
+
+        AuthDTO authDTO = new AuthDTO(token, tenHours);
+
+        return authDTO;
     }
 
 }
