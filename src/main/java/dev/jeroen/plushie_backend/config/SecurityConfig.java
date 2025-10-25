@@ -1,7 +1,7 @@
 package dev.jeroen.plushie_backend.config;
 
 import dev.jeroen.plushie_backend.filters.JwtAuthFilter;
-import dev.jeroen.plushie_backend.services.CustomUserService;
+import dev.jeroen.plushie_backend.services.UserService;
 
 import java.util.Arrays;
 
@@ -27,9 +27,9 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 public class SecurityConfig {
 
     private final JwtAuthFilter jwtAuthFilter;
-    private final CustomUserService userService;
+    private final UserService userService;
 
-    public SecurityConfig(JwtAuthFilter jwtAuthFilter, CustomUserService userService) {
+    public SecurityConfig(JwtAuthFilter jwtAuthFilter, UserService userService) {
         this.jwtAuthFilter = jwtAuthFilter;
         this.userService = userService;
     }

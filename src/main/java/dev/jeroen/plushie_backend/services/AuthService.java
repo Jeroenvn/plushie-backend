@@ -16,12 +16,12 @@ import dev.jeroen.plushie_backend.utilities.JwtUtil;
 @Service
 public class AuthService {
 
-    private CustomUserService userService;
+    private UserService userService;
     private PasswordEncoder passwordEncoder;
     private AuthenticationManager authenticationManager;
     private JwtUtil jwtUtil;
 
-    public AuthService(CustomUserService userService,
+    public AuthService(UserService userService,
             PasswordEncoder passwordEncoder,
             AuthenticationManager authenticationManager,
             JwtUtil jwtUtil) {

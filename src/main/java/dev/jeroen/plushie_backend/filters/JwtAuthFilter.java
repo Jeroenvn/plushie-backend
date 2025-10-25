@@ -1,6 +1,6 @@
 package dev.jeroen.plushie_backend.filters;
 
-import dev.jeroen.plushie_backend.services.CustomUserService;
+import dev.jeroen.plushie_backend.services.UserService;
 import dev.jeroen.plushie_backend.utilities.JwtUtil;
 
 import java.io.IOException;
@@ -21,9 +21,9 @@ import jakarta.servlet.http.HttpServletResponse;
 public class JwtAuthFilter extends OncePerRequestFilter {
 
     private final JwtUtil jwtUtil;
-    private final CustomUserService userService;
+    private final UserService userService;
 
-    public JwtAuthFilter(JwtUtil jwtUtil, CustomUserService userService) {
+    public JwtAuthFilter(JwtUtil jwtUtil, UserService userService) {
         this.jwtUtil = jwtUtil;
         this.userService = userService;
     }
