@@ -12,7 +12,7 @@ public interface UserMapper {
 
     UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
 
-    @Mapping(target = "role", constant = " ROLE_USER")
+    @Mapping(target = "role", constant = "ROLE_USER")
     CustomUser userRegisterDTOToCustomUser(UserRegisterDTO user);
 
 }
