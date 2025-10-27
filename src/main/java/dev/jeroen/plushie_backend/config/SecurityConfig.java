@@ -43,8 +43,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.POST, "/auth/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/categories", "categories/**", "/products", "/products/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/users/{id}/orders").access(new WebExpressionAuthorizationManager("hasRole('ADMIN') || #id == authentication.id"))
-                        .requestMatchers(HttpMethod.POST, "/users/{id}/orders").access(new WebExpressionAuthorizationManager("#id == authentication.id"))
+                        .requestMatchers(HttpMethod.GET, "/users/{id}/orders").hasAnyRole("USER", "ADMIN")
                         .anyRequest().hasRole("ADMIN"))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider())
