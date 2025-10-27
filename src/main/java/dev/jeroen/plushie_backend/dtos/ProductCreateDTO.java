@@ -1,6 +1,8 @@
 package dev.jeroen.plushie_backend.dtos;
 
-import dev.jeroen.plushie_backend.exceptions.MissingRequiredVariableException;
+import org.springframework.http.HttpStatus;
+
+import dev.jeroen.plushie_backend.exceptions.CustomRuntimeException;
 
 public class ProductCreateDTO {
 
@@ -34,19 +36,12 @@ public class ProductCreateDTO {
 
     public void Validate() {
         if (name.isEmpty()) {
-            throw new MissingRequiredVariableException("Name is required");
+            throw new CustomRuntimeException("Name is required", HttpStatus.BAD_REQUEST);
         }
 
         if (category_id == null) {
-            throw new MissingRequiredVariableException("Category id is required");
+            throw new CustomRuntimeException("Category id is required", HttpStatus.BAD_REQUEST);
         }
-    }
-
-    @Override
-    public String toString() {
-        return String.format(
-                "ProductCreateDTO[name:'%s', description:'%s']",
-                name, description);
     }
 
 }
