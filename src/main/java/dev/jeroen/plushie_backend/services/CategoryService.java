@@ -3,12 +3,13 @@ package dev.jeroen.plushie_backend.services;
 import java.util.ArrayList;
 import java.util.Optional;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import dev.jeroen.plushie_backend.dtos.CategoryCreateDTO;
 import dev.jeroen.plushie_backend.entities.Category;
+import dev.jeroen.plushie_backend.exceptions.CustomRuntimeException;
 import dev.jeroen.plushie_backend.exceptions.NotFoundException;
-import dev.jeroen.plushie_backend.exceptions.NotUniqueException;
 import dev.jeroen.plushie_backend.repositories.CategoryRepository;
 
 @Service
@@ -25,7 +26,7 @@ public class CategoryService {
 
         String categoryName = categoryCreateDTO.getName();
         if (repository.existsByName(categoryName)) {
-            throw new NotUniqueException(String.format("Name '%s' is not unique", categoryName));
+            throw new CustomRuntimeException("Name must be unique", HttpStatus.BAD_REQUEST);
         }
 
         Category category = new Category();

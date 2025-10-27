@@ -3,11 +3,10 @@ package dev.jeroen.plushie_backend.controllers;
 import java.util.ArrayList;
 
 import dev.jeroen.plushie_backend.dtos.CategoryCreateDTO;
-import dev.jeroen.plushie_backend.dtos.CategoryDTO;
 import dev.jeroen.plushie_backend.entities.Category;
-import dev.jeroen.plushie_backend.mappers.CategoryMapper;
 import dev.jeroen.plushie_backend.services.CategoryService;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,33 +26,27 @@ public class CategoryController {
     }
 
     @PostMapping()
-    public void postCategory(@RequestBody CategoryCreateDTO category) {
+    public ResponseEntity<String> postCategory(@RequestBody CategoryCreateDTO category) {
         service.createCategory(category);
+        return ResponseEntity.ok("Category was succesfully created!");
     }
 
     @GetMapping("")
-    public ArrayList<CategoryDTO> getAll() {
+    public ResponseEntity<ArrayList<Category>> getAll() {
         ArrayList<Category> categories = service.getAll();
-
-        ArrayList<CategoryDTO> categoryDTOs = new ArrayList<>();
-
-        for (Category category : categories) {
-            CategoryDTO categoryGetDTO = CategoryMapper.INSTANCE.categoryToCategoryDTO(category);
-            categoryDTOs.add(categoryGetDTO);
-        }
-
-        return categoryDTOs;
+        return ResponseEntity.ok(categories);
     }
 
     @GetMapping("/{id}")
-    public CategoryDTO getById(@PathVariable() Long id) {
+    public ResponseEntity<Category> getById(@PathVariable() Long id) {
         Category category = service.getCategoryById(id);
-        return CategoryMapper.INSTANCE.categoryToCategoryDTO(category);
+        return ResponseEntity.ok(category);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteById(@PathVariable() Long id) {
+    public ResponseEntity<String> deleteById(@PathVariable() Long id) {
         service.deleteById(id);
+        return ResponseEntity.ok("Category was succesfully deleted!");
     }
 
 }
