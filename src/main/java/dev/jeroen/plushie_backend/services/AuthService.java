@@ -45,6 +45,16 @@ public class AuthService {
         return generateToken(authRequestDTO);
     }
 
+    public AuthDTO registerAdminUser(UserRegisterDTO userRegister) {
+        String rawPassword = userRegister.getPassword();
+        String encodedPassword = passwordEncoder.encode(userRegister.getPassword());
+        userRegister.setPassword(encodedPassword);
+        CustomUser user = UserMapper.INSTANCE.userRegisterDTOtoCustomUserAdmin(userRegister);
+        userService.saveUser(user);
+        AuthRequestDTO authRequestDTO = new AuthRequestDTO(userRegister.getUsername(), rawPassword);
+        return generateToken(authRequestDTO);
+    }
+
     public AuthDTO generateToken(AuthRequestDTO authRequest) {
         authRequest.validate();
 

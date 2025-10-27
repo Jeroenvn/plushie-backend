@@ -15,4 +15,7 @@ public interface UserMapper {
     @Mapping(target = "role", constant = "ROLE_USER")
     CustomUser userRegisterDTOToCustomUser(UserRegisterDTO user);
 
+    @Mapping(target = "role", constant = "ROLE_ADMIN")
+    CustomUser userRegisterDTOtoCustomUserAdmin(UserRegisterDTO user);
+
 }
