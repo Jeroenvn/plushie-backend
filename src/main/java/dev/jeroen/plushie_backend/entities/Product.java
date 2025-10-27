@@ -48,11 +48,4 @@ public class Product {
         this.category = category;
     }
 
-    @Override
-    public String toString() {
-        return String.format(
-                "Product[id=%d, name='%s', description='%s', category_id=%d]",
-                id, name, description, category);
-    }
-
 }

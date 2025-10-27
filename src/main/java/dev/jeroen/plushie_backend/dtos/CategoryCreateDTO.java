@@ -1,5 +1,9 @@
 package dev.jeroen.plushie_backend.dtos;
 
+import org.springframework.http.HttpStatus;
+
+import dev.jeroen.plushie_backend.exceptions.CustomRuntimeException;
+
 public class CategoryCreateDTO {
 
     private String name;
@@ -14,12 +18,8 @@ public class CategoryCreateDTO {
 
     public void Validate() {
         if (name.isEmpty()) {
-            throw new RuntimeException("Name is required");
+            throw new CustomRuntimeException("Name is required", HttpStatus.BAD_REQUEST);
         }
     }
 
-    @Override
-    public String toString() {
-        return String.format("CategoryCreateDTO[name:'%s']", name);
-    }
 }

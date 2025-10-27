@@ -45,6 +45,16 @@ public class AuthService {
         return generateToken(authRequestDTO);
     }
 
+    public AuthDTO registerAdminUser(UserRegisterDTO userRegister) {
+        String rawPassword = userRegister.getPassword();
+        String encodedPassword = passwordEncoder.encode(userRegister.getPassword());
+        userRegister.setPassword(encodedPassword);
+        CustomUser user = UserMapper.INSTANCE.userRegisterDTOtoCustomUserAdmin(userRegister);
+        userService.saveUser(user);
+        AuthRequestDTO authRequestDTO = new AuthRequestDTO(userRegister.getUsername(), rawPassword);
+        return generateToken(authRequestDTO);
+    }
+
     public AuthDTO generateToken(AuthRequestDTO authRequest) {
         authRequest.validate();
 
@@ -66,7 +76,9 @@ public class AuthService {
         String token = jwtUtil.generateToken((UserDetails) authentication.getPrincipal());
         String tenHours = "36000";
 
-        AuthDTO authDTO = new AuthDTO(token, tenHours);
+        CustomUser user = userService.getByUsername(authRequest.getUsername());
+
+        AuthDTO authDTO = new AuthDTO(user.getId(), token, tenHours);
 
         return authDTO;
     }
