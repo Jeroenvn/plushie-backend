@@ -3,6 +3,7 @@ package dev.jeroen.plushie_backend.services;
 import java.util.ArrayList;
 import java.util.Optional;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import dev.jeroen.plushie_backend.dtos.CategoryCreateDTO;
@@ -21,6 +22,7 @@ public class CategoryService {
         this.repository = repository;
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     public void createCategory(CategoryCreateDTO categoryCreateDTO) {
         categoryCreateDTO.Validate();
 
@@ -49,6 +51,7 @@ public class CategoryService {
         return category.get();
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     public void deleteById(Long id) {
         Category category = getCategoryById(id);
 
