@@ -1,12 +1,9 @@
 package dev.jeroen.plushie_backend.entities;
 
-import java.util.List;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 
 @Entity
 public class Category {
@@ -15,9 +12,6 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private String name;
-
-    @OneToMany(mappedBy = "category")
-    private List<Product> products;
 
     public long getId() {
         return id;
@@ -29,10 +23,6 @@ public class Category {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public List<Product> getProducts() {
-        return products;
     }
 
 }

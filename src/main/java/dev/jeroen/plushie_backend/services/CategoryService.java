@@ -3,14 +3,12 @@ package dev.jeroen.plushie_backend.services;
 import java.util.ArrayList;
 import java.util.Optional;
 
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import dev.jeroen.plushie_backend.dtos.CategoryCreateDTO;
 import dev.jeroen.plushie_backend.entities.Category;
 import dev.jeroen.plushie_backend.exceptions.NotFoundException;
 import dev.jeroen.plushie_backend.exceptions.NotUniqueException;
-import dev.jeroen.plushie_backend.exceptions.ViolatingContstrainsException;
 import dev.jeroen.plushie_backend.repositories.CategoryRepository;
 
 @Service
@@ -22,7 +20,6 @@ public class CategoryService {
         this.repository = repository;
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
     public void createCategory(CategoryCreateDTO categoryCreateDTO) {
         categoryCreateDTO.Validate();
 
@@ -51,15 +48,8 @@ public class CategoryService {
         return category.get();
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
     public void deleteById(Long id) {
-        Category category = getCategoryById(id);
-
-        if (!category.getProducts().isEmpty()) {
-            throw new ViolatingContstrainsException(String.format(
-                    "Category cannot be deleted while there are products connected to it. %d products connected",
-                    category.getProducts().size()));
-        }
+        // check that no products are in the category
 
         repository.deleteById(id);
     }
