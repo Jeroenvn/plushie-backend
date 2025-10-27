@@ -76,7 +76,9 @@ public class AuthService {
         String token = jwtUtil.generateToken((UserDetails) authentication.getPrincipal());
         String tenHours = "36000";
 
-        AuthDTO authDTO = new AuthDTO(token, tenHours);
+        CustomUser user = userService.getByUsername(authRequest.getUsername());
+
+        AuthDTO authDTO = new AuthDTO(user.getId(), token, tenHours);
 
         return authDTO;
     }

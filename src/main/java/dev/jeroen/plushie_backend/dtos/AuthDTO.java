@@ -2,12 +2,22 @@ package dev.jeroen.plushie_backend.dtos;
 
 public class AuthDTO {
 
+    private Long userId;
     private String token;
     private String expiresIn;
 
-    public AuthDTO(String token, String expiresIn) {
+    public AuthDTO(Long userId, String token, String expiresIn) {
+        this.userId = userId;
         this.token = token;
         this.expiresIn = expiresIn;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long user_id) {
+        this.userId = user_id;
     }
 
     public String getToken() {
