@@ -1,0 +1,6 @@
+services:
+  webshop-backend:
+    build: .
+    container_name: webshop-backend
+    ports:
+      - "8081:8081"
