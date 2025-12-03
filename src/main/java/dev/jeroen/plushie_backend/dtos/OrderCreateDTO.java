@@ -2,20 +2,20 @@ package dev.jeroen.plushie_backend.dtos;
 
 import java.util.ArrayList;
 
-public class OrderRequestDTO {
+public class OrderCreateDTO {
 
-    private ArrayList<OrderItemRequestDTO> orderItems;
+    private ArrayList<OrderItemDTO> orderItems;
 
-    public ArrayList<OrderItemRequestDTO> getOrderItems() {
+    public ArrayList<OrderItemDTO> getOrderItems() {
         return orderItems;
     }
 
-    public void setOrderItems(ArrayList<OrderItemRequestDTO> orderItems) {
+    public void setOrderItems(ArrayList<OrderItemDTO> orderItems) {
         this.orderItems = orderItems;
     }
 
     public void validate() {
-        for (OrderItemRequestDTO orderItem : orderItems) {
+        for (OrderItemDTO orderItem : orderItems) {
             orderItem.validate();
         }
     }
