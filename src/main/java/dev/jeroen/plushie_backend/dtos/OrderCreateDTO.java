@@ -4,18 +4,18 @@ import java.util.ArrayList;
 
 public class OrderCreateDTO {
 
-    private ArrayList<OrderItemDTO> orderItems;
+    private ArrayList<OrderItemCreateDTO> orderItems;
 
-    public ArrayList<OrderItemDTO> getOrderItems() {
+    public ArrayList<OrderItemCreateDTO> getOrderItems() {
         return orderItems;
     }
 
-    public void setOrderItems(ArrayList<OrderItemDTO> orderItems) {
+    public void setOrderItems(ArrayList<OrderItemCreateDTO> orderItems) {
         this.orderItems = orderItems;
     }
 
     public void validate() {
-        for (OrderItemDTO orderItem : orderItems) {
+        for (OrderItemCreateDTO orderItem : orderItems) {
             orderItem.validate();
         }
     }

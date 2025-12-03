@@ -4,7 +4,9 @@ import java.util.ArrayList;
 
 import org.springframework.stereotype.Service;
 
+import dev.jeroen.plushie_backend.dtos.OrderItemCreateDTO;
 import dev.jeroen.plushie_backend.dtos.OrderItemDTO;
+import dev.jeroen.plushie_backend.dtos.ProductDTO;
 import dev.jeroen.plushie_backend.dtos.OrderCreateDTO;
 import dev.jeroen.plushie_backend.dtos.OrderDTO;
 import dev.jeroen.plushie_backend.entities.CustomUser;
@@ -12,6 +14,7 @@ import dev.jeroen.plushie_backend.entities.Order;
 import dev.jeroen.plushie_backend.entities.OrderItem;
 import dev.jeroen.plushie_backend.entities.Product;
 import dev.jeroen.plushie_backend.mappers.OrderMapper;
+import dev.jeroen.plushie_backend.mappers.ProductMapper;
 import dev.jeroen.plushie_backend.repositories.OrderItemRepository;
 import dev.jeroen.plushie_backend.repositories.OrderRepository;
 
@@ -41,11 +44,12 @@ public class OrderService {
 
         ArrayList<OrderItem> orderItems = new ArrayList<>();
 
-        for (OrderItemDTO orderItemRequestDTO : orderCreateDTO.getOrderItems()) {
+        for (OrderItemCreateDTO orderItemRequestDTO : orderCreateDTO.getOrderItems()) {
             Product product = productService.getProductById(orderItemRequestDTO.getProductId());
             OrderItem orderItem = new OrderItem();
             orderItem.setProduct(product);
             orderItem.setAmount(orderItemRequestDTO.getAmount());
+            orderItems.add(orderItem);
         }
 
         Order savedOrder = repository.save(order);
@@ -54,6 +58,9 @@ public class OrderService {
             orderItem.setOrder(savedOrder);
             orderItemRepository.save(orderItem);
         }
+
+        System.out.println("\n\nCREATE\nuser id: " + user.getId() + "\nuser: " + user.toString() + "\nrawOrder: " + order.toString() + "\n1st orderitem: " + orderItems.getFirst().toString());
+
     }
 
     public ArrayList<OrderDTO> getOrders(Long userId) {
@@ -61,8 +68,18 @@ public class OrderService {
         ArrayList<Order> rawOrders = repository.findByUser(user);
         ArrayList<OrderDTO> orders = new ArrayList<>();
         for (Order rawOrder : rawOrders) {
-            orders.add(OrderMapper.INSTANCE.orderToOrderDTO(rawOrder));
+            OrderDTO order = OrderMapper.INSTANCE.orderToOrderDTO(rawOrder);
+            ArrayList<OrderItemDTO> orderItems = new ArrayList<>();
+            for (OrderItem rawOrderItem : rawOrder.getOrderItems()) {
+                Product product = productService.getProductById(rawOrderItem.getId());
+                ProductDTO productDTO = ProductMapper.INSTANCE.productToProductDTO(product);
+                OrderItemDTO orderItem = new OrderItemDTO(productDTO, rawOrderItem.getAmount());
+                orderItems.add(orderItem);
+            }
+            order.setOrderItems(orderItems);
+            orders.add(order);
         }
+        System.out.println("\n\nGET\nuser id: " + user.getId() + "\nuser: " + user.toString() + "\nrawOrders: " + rawOrders.toString() + "\norders: " + orders.toString());
         return orders;
     }
 

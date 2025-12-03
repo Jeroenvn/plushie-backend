@@ -2,13 +2,11 @@ package dev.jeroen.plushie_backend.dtos;
 
 import java.util.List;
 
-import dev.jeroen.plushie_backend.entities.OrderItem;
-
 public class OrderDTO {
 
     private long id;
     private long userId;
-    private List<OrderItem> orderItems;
+    private List<OrderItemDTO> orderItems;
     
     public OrderDTO() {
         
@@ -30,11 +28,11 @@ public class OrderDTO {
         this.userId = userId;
     }
 
-    public List<OrderItem> getOrderItems() {
+    public List<OrderItemDTO> getOrderItems() {
         return orderItems;
     }
 
-    public void setOrderItems(List<OrderItem> orderItems) {
+    public void setOrderItems(List<OrderItemDTO> orderItems) {
         this.orderItems = orderItems;
     }
     
