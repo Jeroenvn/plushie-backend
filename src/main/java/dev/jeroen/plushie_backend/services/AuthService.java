@@ -48,8 +48,15 @@ public class AuthService {
     public AuthDTO registerAdminUser(UserRegisterDTO userRegister) {
         String rawPassword = userRegister.getPassword();
         String encodedPassword = passwordEncoder.encode(userRegister.getPassword());
-        userRegister.setPassword(encodedPassword);
-        CustomUser user = UserMapper.INSTANCE.userRegisterDTOtoCustomUserAdmin(userRegister);
+        /*
+        This method is called by the commandlinerunner in PlushieBackendApplication.java to register a default admin.
+        During this time the UserMapper.INSTANCE is unfortunately not available yet and therefore would give error during compilation.
+        For that reason we hand build the user in this case.
+        */
+        CustomUser user = new CustomUser();
+        user.setRole("ROLE_ADMIN");
+        user.setUsername(userRegister.getUsername());
+        user.setPassword(encodedPassword);
         userService.saveUser(user);
         AuthRequestDTO authRequestDTO = new AuthRequestDTO(userRegister.getUsername(), rawPassword);
         return generateToken(authRequestDTO);
