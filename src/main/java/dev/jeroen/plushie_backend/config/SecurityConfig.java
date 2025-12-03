@@ -42,7 +42,8 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers(HttpMethod.POST, "/auth/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/categories", "categories/**", "/products", "/products/**").permitAll()
-                .requestMatchers(HttpMethod.GET, "/users/{id}/orders").hasAnyRole("USER", "ADMIN")
+                .requestMatchers(HttpMethod.POST, "/users/*/orders").hasAnyRole("USER", "ADMIN")
+                .requestMatchers(HttpMethod.GET, "/users/*/orders").hasAnyRole("USER", "ADMIN")
                 .anyRequest().hasRole("ADMIN"))
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authenticationProvider(authenticationProvider())
