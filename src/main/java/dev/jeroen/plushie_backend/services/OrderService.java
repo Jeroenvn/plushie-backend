@@ -59,8 +59,6 @@ public class OrderService {
             orderItemRepository.save(orderItem);
         }
 
-        System.out.println("\n\nCREATE\nuser id: " + user.getId() + "\nuser: " + user.toString() + "\nrawOrder: " + order.toString() + "\n1st orderitem: " + orderItems.getFirst().toString());
-
     }
 
     public ArrayList<OrderDTO> getOrders(Long userId) {
@@ -71,7 +69,7 @@ public class OrderService {
             OrderDTO order = OrderMapper.INSTANCE.orderToOrderDTO(rawOrder);
             ArrayList<OrderItemDTO> orderItems = new ArrayList<>();
             for (OrderItem rawOrderItem : rawOrder.getOrderItems()) {
-                Product product = productService.getProductById(rawOrderItem.getId());
+                Product product = productService.getProductById(rawOrderItem.getProduct().getId());
                 ProductDTO productDTO = ProductMapper.INSTANCE.productToProductDTO(product);
                 OrderItemDTO orderItem = new OrderItemDTO(productDTO, rawOrderItem.getAmount());
                 orderItems.add(orderItem);
@@ -79,7 +77,6 @@ public class OrderService {
             order.setOrderItems(orderItems);
             orders.add(order);
         }
-        System.out.println("\n\nGET\nuser id: " + user.getId() + "\nuser: " + user.toString() + "\nrawOrders: " + rawOrders.toString() + "\norders: " + orders.toString());
         return orders;
     }
 
