@@ -4,7 +4,7 @@ import org.springframework.http.HttpStatus;
 
 import dev.jeroen.plushie_backend.exceptions.CustomRuntimeException;
 
-public class OrderItemRequestDTO {
+public class OrderItemCreateDTO {
 
     private Long productId;
     private int amount;

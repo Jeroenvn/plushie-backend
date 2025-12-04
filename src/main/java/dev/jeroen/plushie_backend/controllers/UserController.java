@@ -1,8 +1,8 @@
 package dev.jeroen.plushie_backend.controllers;
 
-import dev.jeroen.plushie_backend.dtos.OrderRequestDTO;
+import dev.jeroen.plushie_backend.dtos.OrderCreateDTO;
+import dev.jeroen.plushie_backend.dtos.OrderDTO;
 import dev.jeroen.plushie_backend.entities.CustomUser;
-import dev.jeroen.plushie_backend.entities.Order;
 import dev.jeroen.plushie_backend.services.OrderService;
 import dev.jeroen.plushie_backend.services.UserService;
 
@@ -35,14 +35,14 @@ public class UserController {
     }
 
     @PostMapping("/{id}/orders")
-    public ResponseEntity<String> postOrder(@PathVariable() Long id, @RequestBody OrderRequestDTO orderRequestDTO) {
-        orderService.createOrder(id, orderRequestDTO);
+    public ResponseEntity<String> postOrder(@PathVariable() Long id, @RequestBody OrderCreateDTO orderCreateDTO) {
+        orderService.createOrder(id, orderCreateDTO);
         return ResponseEntity.ok("Order was succesfully created!");
     }
 
     @GetMapping("/{id}/orders")
-    public ResponseEntity<ArrayList<Order>> getOrders(@PathVariable() Long id) {
-        ArrayList<Order> orders = orderService.getOrders(id);
+    public ResponseEntity<ArrayList<OrderDTO>> getOrders(@PathVariable() Long id) {
+        ArrayList<OrderDTO> orders = orderService.getOrders(id);
         return ResponseEntity.ok(orders);
     }
 
