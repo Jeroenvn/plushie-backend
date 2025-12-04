@@ -27,16 +27,19 @@ public class PlushieBackendApplication {
 			UserRegisterDTO userRegisterDTO = new UserRegisterDTO();
 			userRegisterDTO.setUsername("supersecretusername");
 			userRegisterDTO.setPassword("supersecretpassword");
-
-			AuthDTO authDTO = authService.registerAdminUser(userRegisterDTO);
-
-			System.out.println(authDTO.getToken());
-
+			authService.registerAdminUser(userRegisterDTO);
 
 			CategoryCreateDTO cat = new CategoryCreateDTO();
 			cat.setName("Sea Creatures");
-
 			categoryService.createCategory(cat);
+
+			CategoryCreateDTO cat2 = new CategoryCreateDTO();
+			cat2.setName("Land Creatures");
+			categoryService.createCategory(cat2);
+
+			CategoryCreateDTO cat3 = new CategoryCreateDTO();
+			cat3.setName("Air Creatures");
+			categoryService.createCategory(cat3);
 
 			ProductCreateDTO product1 = new ProductCreateDTO();
 			product1.setCategory_id(1L);
